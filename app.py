@@ -21,7 +21,7 @@ from sklearn.ensemble import GradientBoostingRegressor
 
 
 # HTML code to show animated chart loader 
-def show_chart_loader():
+def show_chart_loader(placeholder):
     loader_html = """
     <style>
     .chart-loader {
@@ -82,7 +82,7 @@ def show_chart_loader():
         </div>
     </div>
     """
-    st.markdown(loader_html, unsafe_allow_html=True)
+    placeholder.markdown(loader_html, unsafe_allow_html=True)
 
 
 
@@ -364,7 +364,7 @@ if uploaded_file:
     # Show actual vs forecast for each model
         # Show actual vs forecast for each model
 
-    loader_placeholder.empty()    
+    loader_placeholder.empty()   
     st.subheader("📉 Actual vs Forecast")
     for name in models.keys():
         st.write(f"**{name}**")
