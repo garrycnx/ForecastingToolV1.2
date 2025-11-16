@@ -141,24 +141,7 @@ def export_to_excel(results, output_path):
 # Streamlit UI
 
 clock_html = """
-<style>
-#ai-clock-box {
-  position: fixed;
-  top: 10px;
-  left: 10px;
-  z-index: 9999;
-  font-family: 'Segoe UI', sans-serif;
-  font-size: 20px;
-  color: #00ffff;
-  text-align: left;
-  background-color: rgba(0,0,0,0.6);
-  padding: 10px 15px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px #00ffff;
-}
-</style>
-
-<div id="ai-clock-box">
+<div style="position: absolute; top: 10px; left: 10px; z-index: 1000; font-family: 'Segoe UI', sans-serif; font-size: 20px; color: black; text-align: left;">
   <div id="clock"></div>
   <div style="font-size: 14px; margin-top: 5px;">
     Got any Question/Suggestion?<br>
@@ -177,8 +160,8 @@ setInterval(updateClock, 1000);
 updateClock();
 </script>
 """
-components.html(clock_html, height=0)
 
+components.html(clock_html, height=120)
 
 
 st.title("📊 AI - Forecasting Tool By Data Quest")
