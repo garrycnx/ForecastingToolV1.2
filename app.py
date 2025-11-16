@@ -11,6 +11,7 @@ from statsmodels.tsa.arima.model import ARIMA
 import xlsxwriter
 import warnings
 warnings.filterwarnings("ignore")
+import streamlit.components.v1 as components
 
 
 
@@ -139,6 +140,29 @@ def export_to_excel(results, output_path):
 
 # Streamlit UI
 st.title("📊 AI - Forecasting Tool By Data Quest")
+
+clock_html = 
+<div style="position: fixed; top: 10px; left: 10px; z-index: 1000; font-family: monospace; font-size: 20px; color: black;">
+  <div id="clock"></div>
+  <div style="font-size: 14px; margin-top: 5px;">
+    Got any Question/Suggestion?<br>
+    Feel free to contact me at <b>gurpreetsinghwfm@gmail.com</b><br>
+    or WhatsApp me at <b>+91-8377001181</b>
+  </div>
+</div>
+
+<script>
+function updateClock() {
+  const now = new Date();
+  const timeString = now.toLocaleTimeString();
+  document.getElementById('clock').textContent = timeString;
+}
+setInterval(updateClock, 1000);
+updateClock();
+</script>
+components.html(clock_html, height=120)
+
+
 uploaded_file = st.file_uploader("Upload CSV", type="csv")
 
 if uploaded_file:
