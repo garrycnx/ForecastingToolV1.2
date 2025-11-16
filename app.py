@@ -21,68 +21,62 @@ from sklearn.ensemble import GradientBoostingRegressor
 
 
 # HTML code to show animated chart loader 
-def show_chart_loader(placeholder):
-    loader_html = """
-    <style>
-    .chart-loader {
-        width: 100%;
-        text-align: center;
-        margin-top: 20px;
-    }
+loader_placeholder.markdown("""
+<style>
+.loader-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
 
-    .bars {
-        display: flex;
-        justify-content: center;
-        align-items: flex-end;
-        gap: 6px;
-        height: 60px;
-        margin-top: 10px;
-    }
+.bars {
+  width: 60px;
+  height: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
 
-    .bar {
-        width: 10px;
-        height: 20px;
-        background: linear-gradient(45deg, #00eaff, #0066ff);
-        border-radius: 5px;
-        animation: bounce 1.2s infinite ease-in-out;
-    }
+.bars div {
+  width: 8px;
+  background: linear-gradient(180deg, #00c6ff, #0072ff);
+  animation: loading 1s infinite ease-in-out;
+  border-radius: 4px;
+}
 
-    .bar:nth-child(2) { animation-delay: 0.1s; }
-    .bar:nth-child(3) { animation-delay: 0.2s; }
-    .bar:nth-child(4) { animation-delay: 0.3s; }
-    .bar:nth-child(5) { animation-delay: 0.4s; }
+.bars div:nth-child(1) { height: 10px; animation-delay: 0s; }
+.bars div:nth-child(2) { height: 16px; animation-delay: 0.1s; }
+.bars div:nth-child(3) { height: 22px; animation-delay: 0.2s; }
+.bars div:nth-child(4) { height: 30px; animation-delay: 0.3s; }
+.bars div:nth-child(5) { height: 38px; animation-delay: 0.4s; }
 
-    @keyframes bounce {
-        0%   { height: 20px; }
-        50%  { height: 60px; }
-        100% { height: 20px; }
-    }
+@keyframes loading {
+  0%, 100% { transform: scaleY(0.4); }
+  50% { transform: scaleY(1); }
+}
 
-    .loader-text {
-        font-size: 20px;
-        font-weight: bold;
-        color: #222;
-        margin-top: 15px;
-    }
-    </style>
+.loader-text {
+    margin-top: 15px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #444;
+    text-align: center;
+    line-height: 1.6;
+}
+</style>
 
-    <div class="chart-loader">
-        <div class="bars">
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-        </div>
-
-        <div class="loader-text">
-            📊 Generating Forecast... Please wait!  
-            <br>☕ Have a cup of coffee — our AI is working hard!  
-            <br>— Regards, Gurpreet Singh
-        </div>
+<div class="loader-container">
+    <div class="bars">
+        <div></div><div></div><div></div><div></div><div></div>
     </div>
-    """
-    placeholder.markdown(loader_html, unsafe_allow_html=True)
+
+    <div class="loader-text">
+        📊 Generating your forecast...  
+        <br>☕ Grab a coffee — the AI is working!<br>" :- Gurpreet Singh"  
+    </div>
+</div>
+""", unsafe_allow_html=True)
 
 
 
