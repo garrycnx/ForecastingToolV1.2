@@ -163,6 +163,50 @@ updateClock();
 
 components.html(clock_html, height=120)
 
+
+st.markdown(
+    """
+    <style>
+    /* Full-screen animated gradient background */
+    body {
+        background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #0f2027);
+        background-size: 400% 400%;
+        animation: gradientBG 15s ease infinite;
+        color: white;
+    }
+
+    @keyframes gradientBG {
+        0% {background-position: 0% 50%;}
+        50% {background-position: 100% 50%;}
+        100% {background-position: 0% 50%;}
+    }
+
+    /* Override Streamlit default background */
+    .stApp {
+        background: transparent;
+    }
+
+    /* Optional: make text and widgets more readable */
+    .css-18e3th9 {
+        background-color: rgba(0, 0, 0, 0.6);
+        padding: 1rem;
+        border-radius: 10px;
+    }
+
+    /* Optional: style file uploader and buttons */
+    .stFileUploader, .stButton>button {
+        background-color: #1f4068;
+        color: white;
+        border: none;
+        border-radius: 5px;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+
+
 st.title("📊 AI - Forecasting Tool By Data Quest")
 
 
