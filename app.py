@@ -152,15 +152,15 @@ def forecast_var(df):
     y_pred = results.fittedvalues['volume']
     return forecast_df, y_pred
 
-def forecast_catboost(df):
-    X = df[['month_num', 'month', 'year', 'quarter']]
-    y = df['volume']
-    model = CatBoostRegressor(verbose=0).fit(X, y)
-    future = generate_future_dataframe(df)
-    forecast = model.predict(future)
-    forecast_df = pd.DataFrame({'ds': pd.date_range(df['timestamp'].max()+pd.DateOffset(months=1), periods=24, freq='MS'), 'yhat': forecast})
-    y_pred = model.predict(X)
-    return forecast_df, y_pred
+# def forecast_catboost(df):
+#     X = df[['month_num', 'month', 'year', 'quarter']]
+#     y = df['volume']
+#     model = CatBoostRegressor(verbose=0).fit(X, y)
+#     future = generate_future_dataframe(df)
+#     forecast = model.predict(future)
+#     forecast_df = pd.DataFrame({'ds': pd.date_range(df['timestamp'].max()+pd.DateOffset(months=1), periods=24, freq='MS'), 'yhat': forecast})
+#     y_pred = model.predict(X)
+#     return forecast_df, y_pred
 
 def forecast_gb(df):
     X = df[['month_num', 'month', 'year', 'quarter']]
@@ -277,7 +277,7 @@ if uploaded_file:
         'Random Forest': (forecast_rf, 'short-term, interpretable'),
         'XGBoost': (forecast_xgb, 'high accuracy, nonlinear'),
         'LightGBM': (forecast_lgb, 'high accuracy, nonlinear'),
-        'CatBoost': (forecast_catboost, 'nonlinear, categorical support'),
+        # 'CatBoost': (forecast_catboost, 'nonlinear, categorical support'),
         'Gradient Boosting': (forecast_gb, 'nonlinear, interpretable'),
         'Hybrid ARIMA + XGBoost': (forecast_hybrid_arima_xgb, 'hybrid linear + nonlinear')
     }
