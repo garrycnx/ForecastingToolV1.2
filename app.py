@@ -22,8 +22,9 @@ from sklearn.ensemble import GradientBoostingRegressor
 
 # HTML code to show animated chart loader 
 def show_chart_loader(loader_placeholder):
-    loader_placeholder.markdown(
-"""
+
+    # 1️⃣ Inject CSS separately
+    loader_placeholder.markdown("""
 <style>
 .loader-container {
     text-align: center;
@@ -63,7 +64,10 @@ def show_chart_loader(loader_placeholder):
     color: #333;
 }
 </style>
+""", unsafe_allow_html=True)
 
+    # 2️⃣ Insert the HTML
+    loader_placeholder.markdown("""
 <div class="loader-container">
     <div class="loader-bars">
         <div></div><div></div><div></div><div></div><div></div>
