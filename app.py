@@ -138,7 +138,7 @@ def export_to_excel(results, output_path):
     workbook.close()
 
 # Streamlit UI
-st.title("📊 Agentic AI - Forecasting Tool By Data Quest")
+st.title("📊 AI - Forecasting Tool By Data Quest")
 uploaded_file = st.file_uploader("Upload CSV", type="csv")
 
 if uploaded_file:
