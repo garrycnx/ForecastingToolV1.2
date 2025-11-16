@@ -190,7 +190,7 @@ setInterval(updateClock, 1000);
 updateClock();
 </script>
 """
-components.html(clock_html, height=0)
+components.html(clock_html, height=10)
 
 
 
