@@ -141,7 +141,7 @@ def export_to_excel(results, output_path):
 # Streamlit UI
 
 clock_html = """
-<div style="position: absolute; top: 10px; left: 10px; z-index: 1000; font-family: 'Segoe UI', sans-serif; font-size: 20px; color: black;">
+<div style="position: absolute; top: 10px; left: 10px; z-index: 1000; font-family: 'Segoe UI', sans-serif; font-size: 20px; color: black; text-align: left;">
   <div id="clock"></div>
   <div style="font-size: 14px; margin-top: 5px;">
     Got any Question/Suggestion?<br>
