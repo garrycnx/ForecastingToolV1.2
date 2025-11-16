@@ -144,7 +144,7 @@ clock_html = """
 <style>
 #clock-box {
   position: fixed;
-  top: 20px;
+  top: 30px;
   left: 10px;
   z-index: 9999;
   font-family: 'Segoe UI', sans-serif;
