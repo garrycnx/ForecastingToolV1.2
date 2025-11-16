@@ -146,7 +146,26 @@ clock_html = """
   <div style="font-size: 14px; margin-top: 5px;">
     Got any Question/Suggestion?<br>
     Feel free to contact me at <span style="color: #00008B; font-weight: bold;">gurpreetsinghwfm@gmail.com</span><br>
-    or WhatsApp me at <b>+91-8377001181</b>
+    or WhatsApp me at 
+    <style>
+    @keyframes colorShift {
+    0%   { color: #39ff14; }   /* Neon Green */
+    25%  { color: #00ffff; }   /* Cyan */
+    50%  { color: #1e90ff; }   /* Dodger Blue */
+    75%  { color: #ff00ff; }   /* Magenta */
+    100% { color: #39ff14; }   /* Back to Neon Green */
+    }
+
+    .animated-number {
+    animation: colorShift 10s infinite;
+    font-weight: bold;
+    }
+    </style>
+    <span class="animated-number">+91-8377001181</span>
+
+
+
+
   </div>
 </div>
 
