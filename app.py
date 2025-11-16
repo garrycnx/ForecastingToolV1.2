@@ -21,63 +21,59 @@ from sklearn.ensemble import GradientBoostingRegressor
 
 
 # HTML code to show animated chart loader 
-def show_chart_loader(placeholder):
-    placeholder.markdown("""
-    <style>
-    .loader-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin-top: 20px;
-    }
+loader_placeholder.markdown("""
+<style>
+.loader-container {
+    text-align: center;
+    padding: 20px;
+}
 
-    .bars {
-      width: 60px;
-      height: 40px;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-    }
+.loader-bars {
+    display: inline-block;
+    width: 40px;
+    height: 30px;
+    position: relative;
+}
 
-    .bars div {
-      width: 8px;
-      background: linear-gradient(180deg, #00c6ff, #0072ff);
-      animation: loading 1s infinite ease-in-out;
-      border-radius: 4px;
-    }
+.loader-bars div {
+    display: inline-block;
+    width: 6px;
+    height: 20px;
+    margin: 2px;
+    background: #1E90FF;
+    animation: loader 1s infinite ease-in-out;
+}
+.loader-bars div:nth-child(1) { animation-delay: 0s; }
+.loader-bars div:nth-child(2) { animation-delay: 0.1s; }
+.loader-bars div:nth-child(3) { animation-delay: 0.2s; }
+.loader-bars div:nth-child(4) { animation-delay: 0.3s; }
+.loader-bars div:nth-child(5) { animation-delay: 0.4s; }
 
-    .bars div:nth-child(1) { height: 10px; animation-delay: 0s; }
-    .bars div:nth-child(2) { height: 16px; animation-delay: 0.1s; }
-    .bars div:nth-child(3) { height: 22px; animation-delay: 0.2s; }
-    .bars div:nth-child(4) { height: 30px; animation-delay: 0.3s; }
-    .bars div:nth-child(5) { height: 38px; animation-delay: 0.4s; }
+@keyframes loader {
+    0% { transform: scaleY(1); }
+    50% { transform: scaleY(2); }
+    100% { transform: scaleY(1); }
+}
 
-    @keyframes loading {
-      0%, 100% { transform: scaleY(0.4); }
-      50% { transform: scaleY(1); }
-    }
+.loader-text {
+    font-size: 18px;
+    margin-top: 10px;
+    color: #333;
+}
+</style>
 
-    .loader-text {
-        margin-top: 15px;
-        font-size: 16px;
-        font-weight: 500;
-        color: #444;
-        text-align: center;
-        line-height: 1.6;
-    }
-    </style>
-
-    <div class="loader-container">
-        <div class="bars">
-            <div></div><div></div><div></div><div></div><div></div>
-        </div>
-
-        <div class="loader-text">
-            📊 Generating your forecast...  
-            <br>☕ Grab a coffee — the AI is working!<br><b>– Gurpreet Singh</b>
-        </div>
+<div class="loader-container">
+    <div class="loader-bars">
+        <div></div><div></div><div></div><div></div><div></div>
     </div>
-    """, unsafe_allow_html=True)
+
+    <div class="loader-text">
+        📊 <b>Generating your forecast...</b><br>
+        ☕ Grab a coffee — the AI is working!<br>
+        <b>- Gurpreet Singh</b>
+    </div>
+</div>
+""", unsafe_allow_html=True)
 
 
 
