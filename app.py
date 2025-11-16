@@ -20,69 +20,6 @@ from sklearn.ensemble import GradientBoostingRegressor
 
 
 
-# HTML code to show animated chart loader 
-def show_chart_loader(loader_placeholder):
-
-    # 1️⃣ Inject CSS separately
-    loader_placeholder.markdown("""
-<style>
-.loader-container {
-    text-align: center;
-    padding: 20px;
-}
-
-.loader-bars {
-    display: inline-block;
-    width: 40px;
-    height: 30px;
-    position: relative;
-}
-
-.loader-bars div {
-    display: inline-block;
-    width: 6px;
-    height: 20px;
-    margin: 2px;
-    background: #1E90FF;
-    animation: loader 1s infinite ease-in-out;
-}
-.loader-bars div:nth-child(1) { animation-delay: 0s; }
-.loader-bars div:nth-child(2) { animation-delay: 0.1s; }
-.loader-bars div:nth-child(3) { animation-delay: 0.2s; }
-.loader-bars div:nth-child(4) { animation-delay: 0.3s; }
-.loader-bars div:nth-child(5) { animation-delay: 0.4s; }
-
-@keyframes loader {
-    0% { transform: scaleY(1); }
-    50% { transform: scaleY(2); }
-    100% { transform: scaleY(1); }
-}
-
-.loader-text {
-    font-size: 18px;
-    margin-top: 10px;
-    color: #333;
-}
-</style>
-""", unsafe_allow_html=True)
-
-    # 2️⃣ Insert the HTML
-    loader_placeholder.markdown("""
-<div class="loader-container">
-    <div class="loader-bars">
-        <div></div><div></div><div></div><div></div><div></div>
-    </div>
-
-    <div class="loader-text">
-        📊 <b>Generating your forecast...</b><br>
-        ☕ Grab a coffee — the AI is working!<br>
-        <b>- Gurpreet Singh</b>
-    </div>
-</div>
-""", unsafe_allow_html=True)
-
-
-
 
 
 # Load and clean data
