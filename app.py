@@ -12,6 +12,14 @@ import xlsxwriter
 import warnings
 warnings.filterwarnings("ignore")
 import streamlit.components.v1 as components
+from statsmodels.tsa.statespace.sarimax import SARIMAX
+from statsmodels.tsa.holtwinters import ExponentialSmoothing
+from statsmodels.tsa.api import VAR
+from catboost import CatBoostRegressor
+from sklearn.ensemble import GradientBoostingRegressor
+
+
+
 
 
 
@@ -118,6 +126,66 @@ def forecast_lstm(df):
     y_pred = scaler.inverse_transform(model.predict(X)).flatten()
     return forecast_df, y_pred
 
+def forecast_sarima(df):
+    model = SARIMAX(df['volume'], order=(1,1,1), seasonal_order=(1,1,1,12)).fit()
+    forecast = model.forecast(steps=24)
+    future_dates = pd.date_range(df['timestamp'].max() + pd.DateOffset(months=1), periods=24, freq='MS')
+    forecast_df = pd.DataFrame({'ds': future_dates, 'yhat': forecast})
+    y_pred = model.predict(start=0, end=len(df)-1)
+    return forecast_df, y_pred
+
+def forecast_ets(df):
+    model = ExponentialSmoothing(df['volume'], seasonal='add', seasonal_periods=12).fit()
+    forecast = model.forecast(24)
+    future_dates = pd.date_range(df['timestamp'].max() + pd.DateOffset(months=1), periods=24, freq='MS')
+    forecast_df = pd.DataFrame({'ds': future_dates, 'yhat': forecast})
+    y_pred = model.fittedvalues
+    return forecast_df, y_pred
+
+def forecast_var(df):
+    df_var = df[['volume', 'month']].dropna()
+    model = VAR(df_var)
+    results = model.fit(2)
+    forecast = results.forecast(df_var.values[-2:], steps=24)
+    future_dates = pd.date_range(df['timestamp'].max() + pd.DateOffset(months=1), periods=24, freq='MS')
+    forecast_df = pd.DataFrame({'ds': future_dates, 'yhat': forecast[:,0]})
+    y_pred = results.fittedvalues['volume']
+    return forecast_df, y_pred
+
+def forecast_catboost(df):
+    X = df[['month_num', 'month', 'year', 'quarter']]
+    y = df['volume']
+    model = CatBoostRegressor(verbose=0).fit(X, y)
+    future = generate_future_dataframe(df)
+    forecast = model.predict(future)
+    forecast_df = pd.DataFrame({'ds': pd.date_range(df['timestamp'].max()+pd.DateOffset(months=1), periods=24, freq='MS'), 'yhat': forecast})
+    y_pred = model.predict(X)
+    return forecast_df, y_pred
+
+def forecast_gb(df):
+    X = df[['month_num', 'month', 'year', 'quarter']]
+    y = df['volume']
+    model = GradientBoostingRegressor().fit(X, y)
+    future = generate_future_dataframe(df)
+    forecast = model.predict(future)
+    forecast_df = pd.DataFrame({'ds': pd.date_range(df['timestamp'].max()+pd.DateOffset(months=1), periods=24, freq='MS'), 'yhat': forecast})
+    y_pred = model.predict(X)
+    return forecast_df, y_pred
+
+def forecast_hybrid_arima_xgb(df):
+    arima_model = ARIMA(df['volume'], order=(1,1,1)).fit()
+    arima_pred = arima_model.predict(start=0, end=len(df)-1)
+    residuals = df['volume'] - arima_pred
+    X = df[['month_num', 'month', 'year', 'quarter']]
+    xgb_model = xgb.XGBRegressor().fit(X, residuals)
+    future = generate_future_dataframe(df)
+    xgb_forecast = xgb_model.predict(future)
+    arima_forecast = arima_model.forecast(steps=24)
+    final_forecast = arima_forecast + xgb_forecast
+    forecast_df = pd.DataFrame({'ds': pd.date_range(df['timestamp'].max()+pd.DateOffset(months=1), periods=24, freq='MS'), 'yhat': final_forecast})
+    y_pred = arima_pred + xgb_model.predict(X)
+    return forecast_df, y_pred
+
 # Export to Excel
 def export_to_excel(results, output_path):
     workbook = xlsxwriter.Workbook(output_path)
@@ -201,13 +269,19 @@ uploaded_file = st.file_uploader("Upload CSV", type="csv")
 
 if uploaded_file:
     df = load_data(uploaded_file)
-    models = {
+   models = {
     'ARIMA': (forecast_arima, 'short-term, interpretable'),
-    # 'Prophet': (forecast_prophet, 'multi-product, seasonal'),
+    'SARIMA': (forecast_sarima, 'seasonal, interpretable'),
+    'Exponential Smoothing': (forecast_ets, 'seasonal smoothing'),
+    'VAR': (forecast_var, 'multivariate time series'),
     'Random Forest': (forecast_rf, 'short-term, interpretable'),
     'XGBoost': (forecast_xgb, 'high accuracy, nonlinear'),
-    'LightGBM': (forecast_lgb, 'high accuracy, nonlinear')
+    'LightGBM': (forecast_lgb, 'high accuracy, nonlinear'),
+    'CatBoost': (forecast_catboost, 'nonlinear, categorical support'),
+    'Gradient Boosting': (forecast_gb, 'nonlinear, interpretable'),
+    'Hybrid ARIMA + XGBoost': (forecast_hybrid_arima_xgb, 'hybrid linear + nonlinear')
     }
+
 
 
     results = {}
