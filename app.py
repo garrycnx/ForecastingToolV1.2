@@ -19,45 +19,71 @@ from catboost import CatBoostRegressor
 from sklearn.ensemble import GradientBoostingRegressor
 
 
-def show_robot_loader():
-    robot_html = """
+
+# HTML code to show animated chart loader 
+def show_chart_loader():
+    loader_html = """
     <style>
-    .robot-container {
+    .chart-loader {
         width: 100%;
-        overflow: hidden;
-        margin-top: 15px;
+        text-align: center;
+        margin-top: 20px;
     }
 
-    .robot-move {
-        display: inline-block;
-        animation: robotWalk 12s linear infinite;
-        font-size: 45px;
+    .bars {
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        gap: 6px;
+        height: 60px;
+        margin-top: 10px;
     }
 
-    @keyframes robotWalk {
-        0%   { transform: translateX(-120%); }
-        100% { transform: translateX(120%); }
+    .bar {
+        width: 10px;
+        height: 20px;
+        background: linear-gradient(45deg, #00eaff, #0066ff);
+        border-radius: 5px;
+        animation: bounce 1.2s infinite ease-in-out;
+    }
+
+    .bar:nth-child(2) { animation-delay: 0.1s; }
+    .bar:nth-child(3) { animation-delay: 0.2s; }
+    .bar:nth-child(4) { animation-delay: 0.3s; }
+    .bar:nth-child(5) { animation-delay: 0.4s; }
+
+    @keyframes bounce {
+        0%   { height: 20px; }
+        50%  { height: 60px; }
+        100% { height: 20px; }
     }
 
     .loader-text {
         font-size: 20px;
         font-weight: bold;
         color: #222;
-        text-align: center;
-        margin-top: 10px;
+        margin-top: 15px;
     }
     </style>
 
-    <div class="robot-container">
-        <div class="robot-move">🤖🚶‍♂️💡</div>
-    </div>
+    <div class="chart-loader">
+        <div class="bars">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
 
-    <div class="loader-text">
-        ☕ Please wait… AI Forecasting Tool is working hard in the background!  
-        <br>— Regards, Gurpreet Singh
+        <div class="loader-text">
+            📊 Generating Forecast... Please wait!  
+            <br>☕ Have a cup of coffee — our AI is working hard!  
+            <br>— Regards, Gurpreet Singh
+        </div>
     </div>
     """
-    st.markdown(robot_html, unsafe_allow_html=True)
+    st.markdown(loader_html, unsafe_allow_html=True)
+
 
 
 
@@ -306,7 +332,8 @@ st.title("📊 AI - Forecasting Tool By Data Quest")
 uploaded_file = st.file_uploader("Upload CSV", type="csv")
 
 if uploaded_file:
-    show_robot_loader()
+    loader_placeholder = st.empty()   # Create placeholder
+    show_chart_loader(loader_placeholder)  # Show loader animation
     df = load_data(uploaded_file)
     models = {
         'ARIMA': (forecast_arima, 'short-term, interpretable'),
@@ -375,7 +402,7 @@ if uploaded_file:
     export_to_excel(results, "forecast_summary.xlsx")
     with open("forecast_summary.xlsx", "rb") as f:
         st.download_button("📥 Download Forecast Excel", f, "forecast_summary.xlsx")
-
+    loader_placeholder.empty()
     st.success("✅ Forecast complete. Models ranked by RMSE in the summary sheet.")
 
 
