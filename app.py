@@ -190,10 +190,6 @@ setInterval(updateClock, 1000);
 updateClock();
 </script>
 """
-
-
-
-
 st.title("📊 AI - Forecasting Tool By Data Quest")
 
 
