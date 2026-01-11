@@ -11,11 +11,11 @@ from statsmodels.tsa.arima.model import ARIMA
 import xlsxwriter
 import warnings
 warnings.filterwarnings("ignore")
-import streamlit.components.v1 as components
-from statsmodels.tsa.statespace.sarimax import SARIMAX
-from statsmodels.tsa.holtwinters import ExponentialSmoothing
-from statsmodels.tsa.api import VAR
-from catboost import CatBoostRegressor
+# import streamlit.components.v1 as components
+# from statsmodels.tsa.statespace.sarimax import SARIMAX
+# from statsmodels.tsa.holtwinters import ExponentialSmoothing
+# from statsmodels.tsa.api import VAR
+# from catboost import CatBoostRegressor
 from sklearn.ensemble import GradientBoostingRegressor
 
 st.markdown(
