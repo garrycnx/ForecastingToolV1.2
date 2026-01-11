@@ -18,6 +18,20 @@ from statsmodels.tsa.api import VAR
 from catboost import CatBoostRegressor
 from sklearn.ensemble import GradientBoostingRegressor
 
+st.markdown(
+    """
+    <style>
+    /* Hide Streamlit header */
+    header {visibility: hidden;}
+
+    /* Remove top padding */
+    .block-container {
+        padding-top: 1rem;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
 
 
@@ -263,6 +277,13 @@ st.markdown(clock_html, unsafe_allow_html=True)
 
 
 st.title("📊 AI - Forecasting Tool By Data Quest")
+
+st.markdown(
+    "<p style='color:#1f77b4; font-size:14px; margin-top:-10px;'>"
+    "A tool developed by Gurpreet Singh"
+    "</p>",
+    unsafe_allow_html=True
+)
 
 # Code to download the sample CSV file 
 
