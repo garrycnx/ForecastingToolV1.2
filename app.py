@@ -5,8 +5,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
-import xgboost as xgb
-import lightgbm as lgb
+
+
 from statsmodels.tsa.arima.model import ARIMA
 import xlsxwriter
 import warnings
@@ -94,6 +94,7 @@ def forecast_rf(df):
     return forecast_df, y_pred
 
 def forecast_xgb(df):
+    import xgboost as xgb
     X = df[['month_num', 'month', 'year', 'quarter']]
     y = df['volume']
     model = xgb.XGBRegressor().fit(X, y)
@@ -104,6 +105,7 @@ def forecast_xgb(df):
     return forecast_df, y_pred
 
 def forecast_lgb(df):
+    import lightgbm as lgb
     X = df[['month_num', 'month', 'year', 'quarter']]
     y = df['volume']
     model = lgb.LGBMRegressor().fit(X, y)
